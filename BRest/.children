@@ -1,4 +1,4 @@
 test/tests/RequestTest.dart
 BRest.dart
-rest/Request.dart
 test/Tests.dart
+rest/ResourceRequest.dart
