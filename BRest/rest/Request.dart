@@ -20,6 +20,7 @@ class Request {
     request.send();
   }
 
+  // TODO onfailure callback
   void onLoadEnd(XMLHttpRequestProgressEvent event) {
     _callbackOnSuccess(request.responseText);
   }

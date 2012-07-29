@@ -1,5 +1,4 @@
 test/tests/RequestTest.dart
-test/tests/-TestSuite.dart
 BRest.dart
 rest/Request.dart
 test/Tests.dart
