@@ -1,4 +1,4 @@
-#library('RequestTests');
+#library('ResourceRequestTests');
 
 #import('/Users/branflake2267/workspace-sdk/dart-sdk/lib/unittest/unittest.dart');
 #import('../../rest/ResourceRequest.dart');

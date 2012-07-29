@@ -1,4 +1,4 @@
-#library('Request');
+#library('ResourceRequest');
 
 #import('dart:html');
 #import("dart:json");
@@ -11,7 +11,12 @@ class ResourceRequest {
   XMLHttpRequest request;
   RequestHandler _callbackOnSuccess;
   ErrorHandler _callbackOnFailure;
-  
+ 
+  /**
+   * Instantiate a resource request. 
+   * 
+   * Note: If the request is cross site, the remote site will need to have CORS enabled.  
+   */
   ResourceRequest.openGet(String url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
@@ -20,6 +25,9 @@ class ResourceRequest {
     request.on.loadEnd.add((XMLHttpRequestProgressEvent e) => onLoadEnd(e));
   }
   
+  /**
+   * Start the get request
+   */
   void send() {
     request.send();
   }
@@ -28,7 +36,6 @@ class ResourceRequest {
     if (request.readyState == 4 && request.status == 200) {
       _callbackOnSuccess(request.responseText);
     } else if (_callbackOnFailure != null) {
-      print(request.statusText);
       _callbackOnFailure(request.statusText);
     }
   }
