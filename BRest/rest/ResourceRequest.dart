@@ -32,5 +32,4 @@ class ResourceRequest {
       _callbackOnFailure(request.statusText);
     }
   }
-  
 }
