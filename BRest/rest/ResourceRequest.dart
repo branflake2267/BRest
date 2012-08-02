@@ -1,38 +1,58 @@
 #library('ResourceRequest');
 
 #import('dart:html');
-#import("dart:json");
 
 typedef void RequestHandler(String responseText);
 
 typedef void ErrorHandler(String error);
 
 class ResourceRequest {
+  String url;
   XMLHttpRequest request;
   RequestHandler _callbackOnSuccess;
   ErrorHandler _callbackOnFailure;
- 
+  
   /**
-   * Instantiate a resource request. 
+   * Instantiate a resource GET request. 
    * 
    * Note: If the request is cross site, the remote site will need to have CORS enabled.  
    */
-  ResourceRequest.openGet(String url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  ResourceRequest.openGet(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
       _callbackOnFailure = callbackOnFailure {
-    request.open("GET", url, async : true);
-    request.on.loadEnd.add((XMLHttpRequestProgressEvent e) => onLoadEnd(e));
+      _open("GET");
+  }
+  
+  /**
+   * Instantiate a resource PUT request. 
+   * 
+   * Note: If the request is cross site, the remote site will need to have CORS enabled.  
+   */
+  ResourceRequest.openPut(String url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+    : request = new XMLHttpRequest(),
+      _callbackOnSuccess = callbackOnSuccess,
+      _callbackOnFailure = callbackOnFailure {
+      _open("PUT");
   }
   
   /**
    * Start the get request
    */
-  void send() {
-    request.send();
+  void send([String data]) {
+    if (data != null) {
+      request.send(data);
+    } else {
+      request.send();
+    }
+  }
+  
+  void _open(String method) {
+    request.open(method, url, async : true);
+    request.on.loadEnd.add((XMLHttpRequestProgressEvent e) => _onLoadEnd(e));
   }
 
-  void onLoadEnd(XMLHttpRequestProgressEvent event) {
+  void _onLoadEnd(XMLHttpRequestProgressEvent event) {
     if (request.readyState == 4 && request.status == 200) {
       _callbackOnSuccess(request.responseText);
     } else if (_callbackOnFailure != null) {

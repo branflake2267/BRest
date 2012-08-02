@@ -1,4 +1,6 @@
 test/tests/RequestTest.dart
 BRest.dart
+oauth/OAuth2.dart
+test/tests/OAuthTest.dart
 test/Tests.dart
 rest/ResourceRequest.dart

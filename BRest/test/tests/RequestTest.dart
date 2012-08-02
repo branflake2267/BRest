@@ -11,12 +11,14 @@ void runRequestTests() {
 void runGetTest() {
   asyncTest('Test Simple Get Request', 1, () {
     echoOut(String s) {
+      print(s);
       expect("html", matches(new RegExp('html'))); // see if the response contains tag html
       callbackDone(); // tell the unittest that callback is done
     }
     
-    String url = "http://www.html5rocks.com/en/tutorials/file/xhr2/";
+    String url = "http://localhost:8888/_ah/api/personendpoint/v1/person";
     ResourceRequest request = new ResourceRequest.openGet(url, echoOut);
+    //request.request.withCredentials = true;
     request.send();
   });
 }
@@ -24,6 +26,7 @@ void runGetTest() {
 void runGetFailedTest() {
   asyncTest('Test Simple Get Request Failure', 1, () {
     echoOut(String s) {
+      print(s);
       expect("Access-Control-Allow-Origin", matches(new RegExp('Access-Control-Allow-Origin')));
       callbackDone(); 
     }
