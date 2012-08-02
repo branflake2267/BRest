@@ -6,17 +6,15 @@ typedef void RequestHandler(String responseText);
 
 typedef void ErrorHandler(String error);
 
+/**
+ * Note: If the request is cross site, the remote site will need to have CORS enabled.  
+ */
 class ResourceRequest {
   String url;
   XMLHttpRequest request;
   RequestHandler _callbackOnSuccess;
   ErrorHandler _callbackOnFailure;
   
-  /**
-   * Instantiate a resource GET request. 
-   * 
-   * Note: If the request is cross site, the remote site will need to have CORS enabled.  
-   */
   ResourceRequest.openGet(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
@@ -24,17 +22,26 @@ class ResourceRequest {
       _open("GET");
   }
   
-  /**
-   * Instantiate a resource PUT request. 
-   * 
-   * Note: If the request is cross site, the remote site will need to have CORS enabled.  
-   */
-  ResourceRequest.openPut(String url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  ResourceRequest.openPut(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
       _callbackOnFailure = callbackOnFailure {
       _open("PUT");
   }
+  
+  ResourceRequest.openPost(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+    : request = new XMLHttpRequest(),
+      _callbackOnSuccess = callbackOnSuccess,
+      _callbackOnFailure = callbackOnFailure {
+      _open("POST");
+  }
+  
+  ResourceRequest.openDelete(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  : request = new XMLHttpRequest(),
+    _callbackOnSuccess = callbackOnSuccess,
+    _callbackOnFailure = callbackOnFailure {
+    _open("DELETE");
+}
   
   /**
    * Start the get request
