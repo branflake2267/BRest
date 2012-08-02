@@ -3,9 +3,19 @@
 
 void main() {
  
+  if (hasAccessToken()) {
+    startRestRequest();
+  } else {
+    startOAuthRequest();
+  }
+ 
 }
 
-void oauthTest() {
+void startRestRequest() {
+  
+}
+
+void startOAuthRequest() {
   String url = "https://accounts.google.com/o/oauth2/auth";
   String response_type = "token";
   String client_id = "734175750239.apps.googleusercontent.com";
@@ -20,9 +30,21 @@ void oauthTest() {
                                           scope, 
                                           state, 
                                           approval_prompt);
-  
-  String oauthurl = oAuth.getOAuthUrl();
-  print(oauthurl);
-  
-  window.location.href = oauthurl;
+  window.location.href = oAuth.getOAuthUrl();
+}
+
+bool hasAccessToken() {
+  Map<String,String> map = getQueryStringParameters();
+  return map.containsKey("access_token");
+}
+
+Map<String,String> getQueryStringParameters() {
+  Map<String, String> params = new HashMap<String, String>();
+  window.location.hash.replaceFirst("#", "").split("&").forEach((e) {
+    if (e.contains("=")) {
+      List<String> split = e.split("=");
+      params[split[0]] = split[1];
+    }
+  });
+  return params;
 }
