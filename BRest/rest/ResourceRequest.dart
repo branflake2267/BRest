@@ -37,14 +37,14 @@ class ResourceRequest {
   }
   
   ResourceRequest.openDelete(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
-  : request = new XMLHttpRequest(),
-    _callbackOnSuccess = callbackOnSuccess,
-    _callbackOnFailure = callbackOnFailure {
-    _open("DELETE");
-}
+    : request = new XMLHttpRequest(),
+      _callbackOnSuccess = callbackOnSuccess,
+      _callbackOnFailure = callbackOnFailure {
+      _open("DELETE");
+  }
   
   /**
-   * Start the get request
+   * Start the request
    */
   void send([String data]) {
     if (data != null) {
