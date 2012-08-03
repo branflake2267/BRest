@@ -1,5 +1,5 @@
-test/tests/RequestTest.dart
 BRest.dart
 oauth/OAuth2.dart
+rest/RestRequest.dart
 test/Tests.dart
-rest/ResourceRequest.dart
+test/tests/RestTest.dart

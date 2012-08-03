@@ -9,34 +9,37 @@ typedef void ErrorHandler(String error);
 /**
  * Note: If the request is cross site, the remote site will need to have CORS enabled.  
  */
-class ResourceRequest {
+class RestRequest {
   String url;
   XMLHttpRequest request;
   RequestHandler _callbackOnSuccess;
   ErrorHandler _callbackOnFailure;
+  String _data;
   
-  ResourceRequest.openGet(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  RestRequest.openGet(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
       _callbackOnFailure = callbackOnFailure {
       _open("GET");
   }
   
-  ResourceRequest.openPut(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  RestRequest.openPut(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure, String data])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
-      _callbackOnFailure = callbackOnFailure {
+      _callbackOnFailure = callbackOnFailure,
+      _data = data {
       _open("PUT");
   }
   
-  ResourceRequest.openPost(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  RestRequest.openPost(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure, String data])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
-      _callbackOnFailure = callbackOnFailure {
+      _callbackOnFailure = callbackOnFailure,
+      _data = data {
       _open("POST");
   }
   
-  ResourceRequest.openDelete(this.url, String data, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
+  RestRequest.openDelete(this.url, RequestHandler callbackOnSuccess, [ErrorHandler callbackOnFailure])
     : request = new XMLHttpRequest(),
       _callbackOnSuccess = callbackOnSuccess,
       _callbackOnFailure = callbackOnFailure {
@@ -49,6 +52,8 @@ class ResourceRequest {
   void send([String data]) {
     if (data != null) {
       request.send(data);
+    } else if (_data != null) { 
+      request.send(_data);
     } else {
       request.send();
     }
